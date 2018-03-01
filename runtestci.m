@@ -6,7 +6,7 @@ jenkins_workspace = getenv('WORKSPACE');
 
 try
     
-    %suite = testsuite();
+    suite = testsuite();
     
     
     % Create and configure the runner
@@ -15,10 +15,10 @@ try
     
 		
 	% Run tests
-%     results = runner.run(suite);
-    results2 = runtests('testman.mldatx');
+    results = runner.run(suite);
+    %results2 = runtests('testman.mldatx');
     runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile)));
-    display(results2);
+    display(results);
 %     display(results2);
 catch e
     disp(getReport(e, 'extended'));
