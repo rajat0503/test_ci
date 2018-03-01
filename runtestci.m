@@ -6,7 +6,7 @@ jenkins_workspace = getenv('WORKSPACE');
 
 try
     
-    suite = testsuite();
+    %suite = testsuite();
     
     
     % Create and configure the runner
