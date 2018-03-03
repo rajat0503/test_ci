@@ -11,13 +11,13 @@ try
     
     % Create and configure the runner
     runner = TestRunner.withTextOutput();
-    tapResultsFile = fullfile(jenkins_workspace, 'TAPResults.tap');
-    
+    tapResultsFile = fullfile(getenv('WORKSPACE'), 'TAPResults.tap');
+    runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile)));
 		
 	% Run tests
     results = runner.run(suite);
     %results2 = runtests('testman.mldatx');
-    runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile)));
+    matlab.unittest.plugins.ToFile('myFile.tap')
     display(results);
 %     display(results2);
 catch e
