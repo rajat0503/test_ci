@@ -2,7 +2,7 @@ import matlab.unittest.TestSuite;
 import matlab.unittest.TestRunner;
 import matlab.unittest.plugins.TAPPlugin;
 import matlab.unittest.plugins.ToFile;
-% jenkins_workspace = getenv('WORKSPACE');
+jenkins_workspace = getenv('WORKSPACE');
 
 try
     
@@ -11,7 +11,7 @@ try
     
     % Create and configure the runner
     runner = TestRunner.withTextOutput();
-    tapResultsFile = fullfile('C:\Work\Local_Sandbox\test_ci', 'TAPResults.tap');
+    tapResultsFile = fullfile(jenkins_workspace, 'TAPResults.tap');
     runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile)));
 		
 	% Run tests
