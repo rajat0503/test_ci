@@ -3,6 +3,7 @@ import matlab.unittest.TestRunner;
 import matlab.unittest.plugins.TAPPlugin;
 import matlab.unittest.plugins.ToFile;
 jenkins_workspace = getenv('WORKSPACE');
+fileID = fopen(fullfile(jenkins_workspace, 'TAPResults.tap'),'w+');
 
 try
     
