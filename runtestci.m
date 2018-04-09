@@ -2,6 +2,7 @@ import matlab.unittest.TestRunner;
 import matlab.unittest.plugins.TAPPlugin;
 import matlab.unittest.plugins.ToFile;
 jenkins_workspace = getenv('WORKSPACE');
+cd(jenkins_workspace);
 
 try
     
