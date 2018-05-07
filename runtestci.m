@@ -6,7 +6,7 @@ cd(jenkins_workspace);
 
 try
     
-    suite = testsuite();
+    suite = testsuite(); %this the new change
     
     
     % Create and configure the runner
