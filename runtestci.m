@@ -1,4 +1,4 @@
-import matlab.unittest.TestRunner;
+import matlab.unittest.TestRunner; % Package for running test suite 
 import matlab.unittest.plugins.TAPPlugin;
 import matlab.unittest.plugins.ToFile;
 jenkins_workspace = getenv('WORKSPACE');
@@ -6,7 +6,7 @@ cd(jenkins_workspace);
 
 try
     
-    suite = testsuite(); %this the new change
+    suite = testsuite('testman','Name','SLTEST_TC_*'); %this the new change
     
     
     % Create and configure the runner
