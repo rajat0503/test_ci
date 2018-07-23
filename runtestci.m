@@ -17,8 +17,7 @@ suite = testsuite('testman'); %Use SLTEST testman.mldatx file to create testsuit
     % TAP File Created in Jenkins Workspace Path
     
     runner = TestRunner.withTextOutput();
-    runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile),...
-        'Verbosity',Verbosity.Detailed));
+    runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile),'Verbosity',3));
 %     addPlugin(runner,covSettings);
 %  	coverageFile = fullfile(jenkins_workspace, 'coverage.xml');
 %     addCoberturaCoverageIfPossible(runner, jenkins_workspace, coverageFile);	
