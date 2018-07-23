@@ -5,10 +5,10 @@ jenkins_workspace = getenv('WORKSPACE');
 cd(jenkins_workspace);
 
 try
-    mcdcMet = CoverageMetrics('Decision',true,'Condition',true,'MCDC',true);
-covSettings = ModelCoveragePlugin('RecordModelReferenceCoverage',true,...
-     'Collecting',mcdcMet);
-    suite = testsuite('testman'); %Use SLTEST testman.mldatx file to create testsuite
+%     mcdcMet = CoverageMetrics('Decision',true,'Condition',true,'MCDC',true);
+% covSettings = ModelCoveragePlugin('RecordModelReferenceCoverage',true,...
+%      'Collecting',mcdcMet);
+suite = testsuite('testman'); %Use SLTEST testman.mldatx file to create testsuite
     % Create and configure the runner
     
     % TAP File Creation For Test Anything Protocol Integration
