@@ -1,2 +1,2 @@
-test = Simulink.Parameter(2);
+test = Simulink.Parameter(10);
 test.DataType = 'uint8';
