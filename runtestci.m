@@ -5,7 +5,7 @@ import matlab.unittest.plugins.XMLPlugin
 import sltest.plugins.ModelCoveragePlugin
 import sltest.plugins.coverage.CoverageMetrics
 jenkins_workspace = getenv('WORKSPACE');
-cd(jenkins_workspace);
+cd(jenkins_workspace); %defineworkspace
 
 try
 %     mcdcMet = CoverageMetrics('Decision',true,'Condition',true,'MCDC',true);
