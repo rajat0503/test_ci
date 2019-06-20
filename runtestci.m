@@ -4,40 +4,38 @@ import matlab.unittest.plugins.ToFile
 import matlab.unittest.plugins.XMLPlugin
 import sltest.plugins.ModelCoveragePlugin
 import sltest.plugins.coverage.CoverageMetrics
-% % jenkins_workspace = getenv('Jenkins_Workspace');
-% % jenkins_project_workspace = fullfile(jenkins_workspace,'SimulinkTest_Jenkins');
-% cd(jenkins_workspace); %defineworkspace %% sample comment
+import sltest.plugins.coverage.ModelCoverageReport
+
 
 try
-%     mcdcMet = CoverageMetrics('Decision',true,'Condition',true,'MCDC',true);
-% covSettings = ModelCoveragePlugin('RecordModelReferenceCoverage',true,...
-%      'Collecting',mcdcMet);
-suite = testsuite('testman'); %Use SLTEST testman.mldatx file to create testsuite
+    mcdcMet = CoverageMetrics('Decision',true,'Condition',true,'MCDC',true);
+    covSettings = ModelCoveragePlugin('RecordModelReferenceCoverage',true,...
+                     'Collecting',mcdcMet);
+    tf = sltest.testmanager.TestFile('testman.mldatx');         
+    suite = testsuite(tf.FilePath); %Use SLTEST testman.mldatx file to create testsuite
     % Create and configure the runner
     
     % TAP File Creation For Test Anything Protocol Integration
     tapResultsFile = 'TAPResults.tap' ; %fullfile(jenkins_workspace, 'TAPResults.tap');
     xmlResultsFile = 'myTestResults.xml';% fullfile(jenkins_workspace, 'myTestResults.xml');
     p = XMLPlugin.producingJUnitFormat(xmlResultsFile);
-    mcdcMet = CoverageMetrics('Decision',false,'Condition',false,'MCDC',true);
-    covSettings = ModelCoveragePlugin('RecordModelReferenceCoverage',true,...
-    'Collecting',mcdcMet);
-%     CovResultsFile = fullfile(jenkins_workspace, 'CovReport.xml');
-%     p = XMLPlugin.producingJUnitFormat(CovResultsFile);
-%     covSettingsReport = 
+   
+    runner = TestRunner.withTextOutput;
     
-    % new Tap File Creation 
-    % TAP File Created in Jenkins Workspace Path
+    % Store coverage results in directory
     
-    runner = TestRunner.withTextOutput();
+    mkdir('./exReports/Coverage');
+    path = './exReports/Coverage';
+    mcr = ModelCoverageReport(path);
+    
+    mc = ModelCoveragePlugin('Producing',mcr);
+    
     runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile),'Verbosity',3));
     runner.addPlugin(p);
+    runner.addPlugin(mc);
     runner.addPlugin(covSettings);
     
-%     addPlugin(runner,covSettings);
-%  	coverageFile = fullfile(jenkins_workspace, 'coverage.xml');
-%     addCoberturaCoverageIfPossible(runner, jenkins_workspace, coverageFile);	
-	% Run tests
+
 results = runner.run(suite);
 %     results2 = runtests('testman.mldatx');
     %matlab.unittest.plugins.ToFile('myFile.tap')
