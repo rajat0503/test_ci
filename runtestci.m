@@ -16,8 +16,8 @@ suite = testsuite('testman'); %Use SLTEST testman.mldatx file to create testsuit
     % Create and configure the runner
     
     % TAP File Creation For Test Anything Protocol Integration
-    tapResultsFile = fullfile(jenkins_workspace, 'TAPResults.tap');
-    xmlResultsFile = fullfile(jenkins_workspace, 'myTestResults.xml');
+    tapResultsFile = 'TAPResults.tap' ; %fullfile(jenkins_workspace, 'TAPResults.tap');
+    xmlResultsFile = 'myTestResults.xml';% fullfile(jenkins_workspace, 'myTestResults.xml');
     p = XMLPlugin.producingJUnitFormat(xmlResultsFile);
     mcdcMet = CoverageMetrics('Decision',false,'Condition',false,'MCDC',true);
     covSettings = ModelCoveragePlugin('RecordModelReferenceCoverage',true,...
