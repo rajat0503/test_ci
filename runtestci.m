@@ -4,8 +4,9 @@ import matlab.unittest.plugins.ToFile
 import matlab.unittest.plugins.XMLPlugin
 import sltest.plugins.ModelCoveragePlugin
 import sltest.plugins.coverage.CoverageMetrics
-jenkins_workspace = getenv('WORKSPACE');
-cd(jenkins_workspace); %defineworkspace
+jenkins_workspace = getenv('Jenkins_Workspace');
+jenkins_project_workspace = fullfile(jenkins_workspace,'SimulinkTest_Jenkins');
+cd(jenkins_project_workspace); %defineworkspace
 
 try
 %     mcdcMet = CoverageMetrics('Decision',true,'Condition',true,'MCDC',true);
