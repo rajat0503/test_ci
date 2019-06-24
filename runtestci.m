@@ -5,6 +5,7 @@ import matlab.unittest.plugins.XMLPlugin
 import sltest.plugins.ModelCoveragePlugin
 import sltest.plugins.coverage.CoverageMetrics
 import sltest.plugins.coverage.ModelCoverageReport
+import matlab.unittest.plugins.codecoverage.CoberturaFormat
 
 
 try
@@ -15,32 +16,55 @@ try
     suite = testsuite(tf.FilePath); %Use SLTEST testman.mldatx file to create testsuite
     % Create and configure the runner
     
+    % Create Cobertura Report
+    rptfile = [bdroot,'.xml'];
+    rpt = CoberturaFormat(rptfile);
+    
     % TAP File Creation For Test Anything Protocol Integration
-    tapResultsFile = 'TAPResults.tap' ; %fullfile(jenkins_workspace, 'TAPResults.tap');
-    xmlResultsFile = 'myTestResults.xml';% fullfile(jenkins_workspace, 'myTestResults.xml');
+    % Store Tap results
+    TapResultFolder = './TapResults';
+    
+    if ~exist(TapResultFolder, 'dir')
+       mkdir(TapResultFolder)
+    end
+    tapResultsFile = './TapResults/TAPResults.tap' ; 
+    xmlResultsFile = './TapResults/myTestResults.xml';
     p = XMLPlugin.producingJUnitFormat(xmlResultsFile);
    
     runner = TestRunner.withTextOutput;
     
     % Store coverage results in directory
     
-    mkdir('./exReports/Coverage');
-    path = './exReports/Coverage';
-    mcr = ModelCoverageReport(path);
+    CovPath = './exReports/Coverage/';
+     if ~exist(CovPath, 'dir')
+       mkdir(CovPath)
+     else
+      d = dir('./exReports/Coverage/*.xml');
+     for i= 1:length(d)
+         delete(['./exReports/Coverage/',d(i).name]);
+     end
+     end
+  
+    % Create Cobertura Report
+    rptfile = [CovPath,bdroot,'.xml'];
+    rpt = CoberturaFormat(rptfile);
+    %mcr = ModelCoverageReport(path);
     
-    mc = ModelCoveragePlugin('Producing',mcr);
+    mc = ModelCoveragePlugin('Collecting',mcdcMet,'Producing',rpt);
     
     runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile),'Verbosity',3));
     runner.addPlugin(p);
     runner.addPlugin(mc);
     runner.addPlugin(covSettings);
     
+    % Turn off command line warnings:
+    warning off Stateflow:cdr:VerifyDangerousComparison
+    warning off Stateflow:Runtime:TestVerificationFailed
 
-results = runner.run(suite);
-%     results2 = runtests('testman.mldatx');
-    %matlab.unittest.plugins.ToFile('myFile.tap')
+    results = runner.run(suite);
+
     display(results);
-%      display(results2);
+
 catch e
     disp(getReport(e, 'extended'));
  
