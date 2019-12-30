@@ -52,7 +52,7 @@ try
     
     mc = ModelCoveragePlugin('Collecting',mcdcMet,'Producing',rpt);
     
-    runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile),'Verbosity',3));
+    runner.addPlugin(TAPPlugin.producingVersion13(ToFile(tapResultsFile),'IncludingPassingDiagnostics',true','Verbosity',3));
     runner.addPlugin(p);
     runner.addPlugin(mc);
     runner.addPlugin(covSettings);
